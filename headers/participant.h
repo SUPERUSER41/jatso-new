@@ -1,11 +1,12 @@
 #ifndef PARTICIPANT_H
 #define PARTICIPANT_H
+#include "date.h"
 typedef struct Participant
 {
     int id;
     char name[50];
     char gender;
-    char dob[10];
+    Date *dob;
     char school[50];
     char competition[50];
     int swim;

@@ -18,7 +18,7 @@ Participant *InitParticipant()
     p->id = 0;
     strcpy(p->name, "");
     p->gender = ' ';
-    strcpy(p->dob, "");
+    p->dob = malloc(sizeof(Date));
     strcpy(p->school, "");
     strcpy(p->competition, "");
     p->swim = 0;
@@ -39,7 +39,7 @@ void RegisterParticipant(Participant *p)
     scanf(" %c", &p->gender);
     fflush(stdin);
     printf("Enter date of birth (mm/dd/yyyy):\n");
-    scanf("%[^\n]s", p->dob);
+    scanf("%d/%d/%d", &p->dob->month, &p->dob->day, &p->dob->year);
     fflush(stdin);
     printf("Enter school/club:\n");
     scanf("%[^\n]s", p->school);
@@ -56,8 +56,9 @@ void SaveParticipant(Participant *p)
     {
         perror("Error opening file");
     }
-
-    int isSuccessful = fprintf(fp, FILE_FORMAT, p->id, p->name, p->gender, p->dob, p->school, p->competition, p->swim, p->cycle, p->run, p->score);
+    char dob[10];
+    sprintf(dob, "%d/%d/%d", p->dob->month, p->dob->day, p->dob->year);
+    int isSuccessful = fprintf(fp, FILE_FORMAT, p->id, p->name, p->gender, dob, p->school, p->competition, p->swim, p->cycle, p->run, p->score);
 
     if (isSuccessful == -1)
     {
@@ -73,7 +74,9 @@ void SaveParticipant(Participant *p)
 
 void PrintParticipant(Participant *p)
 {
-    printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\n", p->id, p->name, p->gender, p->dob);
+    char dob[10];
+    sprintf(dob, "%d/%d/%d", p->dob->month, p->dob->day, p->dob->year);
+    printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\n", p->id, p->name, p->gender, dob);
     printf("================================\n");
     printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
            p->competition, p->swim, p->cycle, p->run, p->score);
@@ -81,5 +84,6 @@ void PrintParticipant(Participant *p)
 
 void DestroyParticipant(Participant *p)
 {
+    free(p->dob);
     free(p);
 }
