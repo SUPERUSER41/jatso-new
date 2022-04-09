@@ -22,9 +22,20 @@ Participant *InitParticipant()
     p->cycle = 0;
     p->run = 0;
     p->score = 0;
-    p->PrintParticipant = &PrintParticipant;
 
     return p;
+}
+
+void RegisterParticipant(Participant *p)
+{
+    printf("Enter name:\n");
+    scanf("%[^\n]s", p->name);
+    printf("Enter gender:\n");
+    scanf(" %c", &p->gender);
+    printf("Enter date of birth (mm/dd/yyyy):\n");
+    scanf("%[^\n]s", p->dob);
+    printf("Enter school/club:\n");
+    scanf("%[^\n]s", p->school);
 }
 
 void PrintParticipant(Participant *p)
@@ -37,6 +48,5 @@ void PrintParticipant(Participant *p)
 
 void DestroyParticipant(Participant *p)
 {
-    p->PrintParticipant = NULL;
     free(p);
 }

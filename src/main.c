@@ -4,7 +4,8 @@
 int main()
 {
     Participant *p = InitParticipant();
-    p->PrintParticipant(p);
+    RegisterParticipant(p);
+    PrintParticipant(p);
     DestroyParticipant(p);
     return 0;
 }
