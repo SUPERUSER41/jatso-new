@@ -167,12 +167,12 @@ void AssignCompetition(int age, Participant *p)
     }
 }
 
-Participant *SearchParticipant()
+void SearchParticipant()
 {
     clrscr();
     FILE *fp = fopen(FILE_NAME, "r");
-    Participant p, *foundParticipant = NULL;
-    int id;
+    Participant p;
+    int id, ch;
     char dob[10];
     bool found = false;
 
@@ -191,9 +191,26 @@ Participant *SearchParticipant()
         if (p.id == id)
         {
             found = true;
-            foundParticipant = &p;
-            PrintParticipant(foundParticipant, dob);
-            return foundParticipant;
+            do
+            {
+                clrscr();
+                printf("-------------------------\n");
+                printf("View/Update Participant\n");
+                printf("-------------------------\n");
+                printf("1. View Participant\n");
+                printf("2. Update Participant Time\n");
+                printf("0. Back\n");
+                scanf("%d", &ch);
+                switch (ch)
+                {
+                case 1:
+                    PrintParticipant(&p, dob);
+                    break;
+                case 2:
+                    UpdateTime(&p);
+                    break;
+                }
+            } while (ch != 0);
         }
     }
 
@@ -202,18 +219,17 @@ Participant *SearchParticipant()
         printf("Participant not found!\n");
         pause();
     }
-    return foundParticipant;
 }
 
-void UpdateTime()
+void UpdateTime(Participant *p)
 {
-    int ch, newTime = 0;
-    Participant *p = SearchParticipant();
+    int ch;
     if (p != NULL)
     {
         do
         {
             clrscr();
+            printf("------%s------\n", p->competition);
             printf("-------------------------\n");
             printf("Enter Participant Time\n");
             printf("-------------------------\n");
@@ -227,17 +243,17 @@ void UpdateTime()
             case 1:
                 printf("Current swim time:\n");
                 printf("Enter new swim time:\n");
-                scanf("%d", &newTime);
+                scanf("%d", &p->swim);
                 break;
             case 2:
                 printf("Current swim time:\n");
                 printf("Enter new cycle time:\n");
-                scanf("%d", &newTime);
+                scanf("%d", &p->swim);
                 break;
             case 3:
                 printf("Current swim time:\n");
                 printf("Enter new run time:\n");
-                scanf("%d", &newTime);
+                scanf("%d", &p->swim);
                 break;
             }
         } while (ch != 0);
