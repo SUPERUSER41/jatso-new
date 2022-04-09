@@ -25,4 +25,6 @@ bool IsValidAge(int age);
 void AssignCompetition(int age, Participant *p);
 void PrintParticipant(Participant *p);
 void DestroyParticipant(Participant *p);
+void pause();
+void clrscr();
 #endif

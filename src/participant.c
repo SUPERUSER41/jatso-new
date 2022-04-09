@@ -36,7 +36,8 @@ Participant *InitParticipant()
 
 void RegisterParticipant(Participant *p)
 {
-
+    int age;
+    clrscr();
     fflush(stdin);
     printf("Enter date of birth (mm/dd/yyyy):\n");
     scanf("%d/%d/%d", &p->dob->month, &p->dob->day, &p->dob->year);
@@ -44,16 +45,19 @@ void RegisterParticipant(Participant *p)
     if (!IsValidDate(p->dob))
     {
         printf("Invalid date, please try again.\n");
+        pause();
     }
     else
     {
-        int age = CalculateAge(p->dob->year);
+        age = CalculateAge(p->dob->year);
         if (!IsValidAge(age))
         {
             printf("Participant is too old.\n");
+            pause();
         }
         else
         {
+            AssignCompetition(age, p);
             fflush(stdin);
             printf("Enter name:\n");
             scanf("%[^\n]s", p->name);
@@ -65,7 +69,7 @@ void RegisterParticipant(Participant *p)
             fflush(stdin);
             printf("Enter school/club:\n");
             scanf("%[^\n]s", p->school);
-
+            pause();
             SaveParticipant(p);
             PrintParticipant(p);
         }
@@ -88,10 +92,13 @@ void SaveParticipant(Participant *p)
     if (isSuccessful == -1)
     {
         perror("Error writing to file");
+        pause();
     }
     else
     {
+        clrscr();
         printf("Successfully saved participant to file\n");
+        pause();
     }
 
     fclose(fp);
@@ -134,6 +141,7 @@ void AssignCompetition(int age, Participant *p)
 
 void PrintParticipant(Participant *p)
 {
+    clrscr();
     char dob[10];
     sprintf(dob, "%d/%d/%d", p->dob->month, p->dob->day, p->dob->year);
 
@@ -141,10 +149,21 @@ void PrintParticipant(Participant *p)
     printf("================================\n");
     printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
            p->competition, p->swim, p->cycle, p->run, p->score);
+    pause();
 }
 
 void DestroyParticipant(Participant *p)
 {
     free(p->dob);
     free(p);
+}
+
+void pause()
+{
+    system("read -n1 -r -p \"Press any key to continue...\" key");
+}
+
+void clrscr()
+{
+    system("@cls||clear");
 }
