@@ -15,6 +15,8 @@ typedef struct Participant
 } Participant;
 Participant *InitParticipant();
 void RegisterParticipant(Participant *p);
+void SaveParticipant(Participant *p);
+void GenerateId(Participant *p);
 void PrintParticipant(Participant *p);
 void DestroyParticipant(Participant *p);
 #endif
