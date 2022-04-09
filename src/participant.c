@@ -366,7 +366,45 @@ void PrintBestTriathlete()
     // Search the file for the participant with the maximum score found above
     // Display the participant
 }
+void PrintCompetitionWinner()
+{
+    FILE *fp = fopen(FILE_NAME, "r");
+    char dob[10];
+    int ch;
+    Participant p;
+    int scores[4];
+    do
+    {
+        clrscr();
+        printf("-------------------------\n");
+        printf("\tView Winner\n");
+        printf("-------------------------\n");
+        printf("1. Kids of Steel\n");
+        printf("2. Iron Kids\n");
+        printf("3. Cast Iron Kids\n");
+        printf("0. Exit\n");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            printf("Kids of Steel\n");
+            for (int i = 0; i < sizeof(scores); i++)
+            {
+                while (fscanf(fp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
+                {
+                    if (p.competition == KIDS_OF_STEEL)
+                    {
+                        scores[i] = p.score;
+                    }
+                }
+            }
+            break;
 
+        default:
+            break;
+        }
+    } while (ch != 0);
+}
 void DestroyParticipant(Participant *p)
 {
     free(p->dob);

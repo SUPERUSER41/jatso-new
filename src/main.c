@@ -26,8 +26,10 @@ int main()
             SearchParticipant();
             break;
         case 3:
+            PrintBestTriathlete();
             break;
         case 4:
+            PrintCompetitionWinner();
             break;
         }
     } while (ch != 0);
