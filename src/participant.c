@@ -114,12 +114,14 @@ int GenerateId()
     FILE *fp = fopen(FILE_NAME, "r");
     int id = 0;
     Participant p;
+    char dob[10];
+
     if (fp == NULL)
     {
         perror("Error reading file");
+        pause();
+        exit(1);
     }
-
-    char dob[10];
 
     while (fscanf(fp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
     {
@@ -162,6 +164,32 @@ void AssignCompetition(int age, Participant *p)
     else if (age >= 12 && age <= 15)
     {
         strcpy(p->competition, CAST_IRON_KIDS);
+    }
+}
+
+void SearchParticipant()
+{
+    FILE *fp = fopen(FILE_NAME, "r");
+    Participant p;
+    int id;
+    char dob[10];
+
+    if (fp == NULL)
+    {
+        perror("Error reading file");
+        pause();
+        exit(1);
+    }
+
+    printf("Enter id to search:\n");
+    scanf("%d", &id);
+
+    while (fscanf(fp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
+    {
+        if (p.id == id)
+        {
+            // PrintParticipant(&p);
+        }
     }
 }
 

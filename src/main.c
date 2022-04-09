@@ -4,7 +4,8 @@
 int main()
 {
     Participant *p = InitParticipant();
-    RegisterParticipant(p);
+    // RegisterParticipant(p);
+    SearchParticipant();
     DestroyParticipant(p);
     return 0;
 }
