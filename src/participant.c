@@ -6,6 +6,7 @@
 #include "../headers/participant.h"
 
 const char *FILE_NAME = "./data/data.csv";
+const char *TEMP_FILE_NAME = "./data/temp.csv";
 const char *FILE_FORMAT_IN = "%d,%[^,],%c,%[^,],%[^,],%[^,],%d,%d,%d,%d\n";
 const char *FILE_FORMAT_OUT = "%d,%s,%c,%s,%s,%s,%d,%d,%d,%d\n";
 const char *KIDS_OF_STEEL = "Kids of Steel";
@@ -244,21 +245,54 @@ void UpdateTime(Participant *p)
                 printf("Current swim time:\n");
                 printf("Enter new swim time:\n");
                 scanf("%d", &p->swim);
+                UpdateParticipant(p);
                 break;
             case 2:
                 printf("Current swim time:\n");
                 printf("Enter new cycle time:\n");
-                scanf("%d", &p->swim);
+                scanf("%d", &p->cycle);
+                UpdateParticipant(p);
                 break;
             case 3:
                 printf("Current swim time:\n");
                 printf("Enter new run time:\n");
-                scanf("%d", &p->swim);
+                scanf("%d", &p->run);
+                UpdateParticipant(p);
                 break;
             }
         } while (ch != 0);
     }
     pause();
+}
+
+void UpdateParticipant(Participant *p)
+{
+    FILE *fp = fopen(TEMP_FILE_NAME, "w");
+
+    if (fp == NULL)
+    {
+        perror("Error opening file");
+    }
+
+    char dob[10];
+    sprintf(dob, "%d/%d/%d", 1, 1, 2014);
+
+    int isSuccessful = fprintf(fp, FILE_FORMAT_OUT, p->id, p->name, p->gender, dob, p->school, p->competition, p->swim, p->cycle, p->run, p->score);
+
+    if (isSuccessful == -1)
+    {
+        perror("Error writing to file");
+        pause();
+    }
+    else
+    {
+        clrscr();
+        printf("Successfully update participant to file\n");
+        pause();
+        PrintParticipant(p, dob);
+    }
+
+    fclose(fp);
 }
 
 void PrintParticipant(Participant *p, char *dob)
