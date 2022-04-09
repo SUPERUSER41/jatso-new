@@ -202,10 +202,33 @@ void SearchParticipant()
     }
 }
 
-void UpdateSwimTime(Participant *p)
+void UpdateTime()
 {
-    printf("Enter new swim time:\n");
-    scanf("%d", &p->swim);
+    int ch;
+    clrscr();
+    do
+    {
+        printf("1. Update Swim Time\n");
+        printf("2. Update Cycle Time\n");
+        printf("3. Update Run Time\n");
+        printf("0. Back\n");
+        scanf("%d", ch);
+        switch (ch)
+        {
+        case 1:
+            printf("Enter new swim time:\n");
+            scanf("%d", &p->swim);
+            break;
+        case 2:
+            printf("Enter new cycle time:\n");
+            scanf("%d", &p->cycle);
+            break;
+        case 3:
+            printf("Enter new run time:\n");
+            scanf("%d", &p->run);
+            break;
+        }
+    } while (ch != 0);
 }
 
 void PrintParticipant(Participant *p, char *dob)

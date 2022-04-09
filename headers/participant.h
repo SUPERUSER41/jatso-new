@@ -24,7 +24,7 @@ int CalculateAge(int birthYear);
 bool IsValidAge(int age);
 void AssignCompetition(int age, Participant *p);
 void SearchParticipant();
-void UpdateSwimTime();
+void UpdateTime();
 void PrintParticipant(Participant *p, char *dob);
 void DestroyParticipant(Participant *p);
 void pause();
