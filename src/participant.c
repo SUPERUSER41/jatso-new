@@ -212,7 +212,7 @@ void UpdateTime()
         printf("2. Update Cycle Time\n");
         printf("3. Update Run Time\n");
         printf("0. Back\n");
-        scanf("%d", ch);
+        scanf("%d", &ch);
         switch (ch)
         {
         case 1:
