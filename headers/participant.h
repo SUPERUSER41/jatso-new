@@ -26,6 +26,7 @@ void AssignCompetition(int age, Participant *p);
 void SearchParticipant();
 void UpdateTime();
 void UpdateParticipant(Participant *p);
+void UpdateFile();
 void PrintParticipant(Participant *p, char *dob);
 void DestroyParticipant(Participant *p);
 void pause();

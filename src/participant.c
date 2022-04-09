@@ -288,11 +288,46 @@ void UpdateParticipant(Participant *p)
     {
         clrscr();
         printf("Successfully update participant to file\n");
+        UpdateFile();
         pause();
         PrintParticipant(p, dob);
     }
 
     fclose(fp);
+}
+
+void UpdateFile()
+{
+    Participant p;
+    char dob[10];
+    int isSuccessful;
+    FILE *fpTmp = fopen(TEMP_FILE_NAME, "r");
+    FILE *fpData = fopen(FILE_NAME, "a+");
+
+    if (fpTmp == NULL || fpData == NULL)
+    {
+        perror("Error opening file");
+    }
+
+    while (fscanf(fpTmp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
+    {
+        isSuccessful = fprintf(fpData, FILE_FORMAT_OUT, p.id, p.name, p.gender, dob, p.school, p.competition, p.swim, p.cycle, p.run, p.score);
+    }
+
+    if (isSuccessful == -1)
+    {
+        perror("Error updating file");
+        pause();
+    }
+    else
+    {
+        clrscr();
+        printf("Successfully update data file\n");
+        pause();
+    }
+
+    fclose(fpTmp);
+    fclose(fpData);
 }
 
 void PrintParticipant(Participant *p, char *dob)
