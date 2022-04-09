@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include "../headers/participant.h"
+
 int main()
 {
-    printf("Hello World\n");
+    Participant *p = InitParticipant();
+
     return 0;
 }
