@@ -12,6 +12,9 @@ typedef struct Participant
     int cycle;
     int run;
     int score;
+    void (*PrintParticipant)(struct Participant *p);
 } Participant;
 Participant *InitParticipant();
+void PrintParticipant(Participant *p);
+void DestroyParticipant(Participant *p);
 #endif
