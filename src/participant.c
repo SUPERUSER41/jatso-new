@@ -205,9 +205,12 @@ void SearchParticipant()
 void UpdateTime()
 {
     int ch, newTime = 0;
-    clrscr();
     do
     {
+        clrscr();
+        printf("-------------------------\n");
+        printf("Enter Participant Time\n");
+        printf("-------------------------\n");
         printf("1. Update Swim Time\n");
         printf("2. Update Cycle Time\n");
         printf("3. Update Run Time\n");
