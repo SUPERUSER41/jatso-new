@@ -23,7 +23,7 @@ int GenerateId();
 int CalculateAge(int birthYear);
 bool IsValidAge(int age);
 void AssignCompetition(int age, Participant *p);
-void SearchParticipant();
+Participant *SearchParticipant();
 void UpdateTime();
 void PrintParticipant(Participant *p, char *dob);
 void DestroyParticipant(Participant *p);
