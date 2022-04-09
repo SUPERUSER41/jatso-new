@@ -6,7 +6,8 @@
 #include "../headers/participant.h"
 
 const char *FILE_NAME = "./data/data.csv";
-const char *FILE_FORMAT = "%d,%s,%c,%s,%s,%s,%d,%d,%d,%d\n";
+const char *FILE_FORMAT_IN = "%d,%[^,],%c,%[^,],%[^,],%[^,],%d,%d,%d,%d\n";
+const char *FILE_FORMAT_OUT = "%d,%s,%c,%s,%s,%s,%d,%d,%d,%d\n";
 const char *KIDS_OF_STEEL = "Kids of Steel";
 const char *IRON_KIDS = "Iron Kids";
 const char *CAST_IRON_KIDS = "Cast Iron Kids";
@@ -70,8 +71,8 @@ void RegisterParticipant(Participant *p)
             printf("Enter school/club:\n");
             scanf("%[^\n]s", p->school);
             pause();
+
             SaveParticipant(p);
-            PrintParticipant(p);
         }
     }
 }
@@ -84,10 +85,13 @@ void SaveParticipant(Participant *p)
     {
         perror("Error opening file");
     }
+
     char dob[10];
     sprintf(dob, "%d/%d/%d", p->dob->month, p->dob->day, p->dob->year);
 
-    int isSuccessful = fprintf(fp, FILE_FORMAT, p->id, p->name, p->gender, dob, p->school, p->competition, p->swim, p->cycle, p->run, p->score);
+    p->id = GenerateId();
+
+    int isSuccessful = fprintf(fp, FILE_FORMAT_OUT, p->id, p->name, p->gender, dob, p->school, p->competition, p->swim, p->cycle, p->run, p->score);
 
     if (isSuccessful == -1)
     {
@@ -99,9 +103,31 @@ void SaveParticipant(Participant *p)
         clrscr();
         printf("Successfully saved participant to file\n");
         pause();
+        PrintParticipant(p);
     }
 
     fclose(fp);
+}
+
+int GenerateId()
+{
+    FILE *fp = fopen(FILE_NAME, "r");
+    int id = 0;
+    Participant p;
+    if (fp == NULL)
+    {
+        perror("Error reading file");
+    }
+
+    char dob[10];
+
+    while (fscanf(fp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
+    {
+        id = p.id;
+    }
+
+    fclose(fp);
+    return id + 1;
 }
 
 int CalculateAge(int birthYear)

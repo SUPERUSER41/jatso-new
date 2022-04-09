@@ -1,7 +1,7 @@
 #ifndef PARTICIPANT_H
 #define PARTICIPANT_H
-#include "date.h"
 #include <stdbool.h>
+#include "date.h"
 
 typedef struct Participant
 {
@@ -19,7 +19,7 @@ typedef struct Participant
 Participant *InitParticipant();
 void RegisterParticipant(Participant *p);
 void SaveParticipant(Participant *p);
-int GenerateId(Participant *p);
+int GenerateId();
 int CalculateAge(int birthYear);
 bool IsValidAge(int age);
 void AssignCompetition(int age, Participant *p);
