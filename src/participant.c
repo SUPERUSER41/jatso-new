@@ -202,6 +202,12 @@ void SearchParticipant()
     }
 }
 
+void UpdateSwimTime(Participant *p)
+{
+    printf("Enter new swim time:\n");
+    scanf("%d", &p->swim);
+}
+
 void PrintParticipant(Participant *p, char *dob)
 {
     clrscr();
