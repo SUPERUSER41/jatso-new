@@ -103,7 +103,7 @@ void SaveParticipant(Participant *p)
         clrscr();
         printf("Successfully saved participant to file\n");
         pause();
-        PrintParticipant(p);
+        PrintParticipant(p, dob);
     }
 
     fclose(fp);
@@ -169,10 +169,12 @@ void AssignCompetition(int age, Participant *p)
 
 void SearchParticipant()
 {
+    clrscr();
     FILE *fp = fopen(FILE_NAME, "r");
     Participant p;
     int id;
     char dob[10];
+    bool found = false;
 
     if (fp == NULL)
     {
@@ -188,16 +190,21 @@ void SearchParticipant()
     {
         if (p.id == id)
         {
-            // PrintParticipant(&p);
+            found = true;
+            PrintParticipant(&p, dob);
         }
+    }
+
+    if (!found)
+    {
+        printf("Participant not found!\n");
+        pause();
     }
 }
 
-void PrintParticipant(Participant *p)
+void PrintParticipant(Participant *p, char *dob)
 {
     clrscr();
-    char dob[10];
-    sprintf(dob, "%d/%d/%d", p->dob->month, p->dob->day, p->dob->year);
 
     printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\n", p->id, p->name, p->gender, dob);
     printf("================================\n");
