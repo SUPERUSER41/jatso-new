@@ -35,7 +35,7 @@ void RegisterParticipant(Participant *p)
     printf("Enter name:\n");
     scanf("%[^\n]s", p->name);
     fflush(stdin);
-    printf("Enter gender:\n");
+    printf("Enter gender (M/F):\n");
     scanf(" %c", &p->gender);
     fflush(stdin);
     printf("Enter date of birth (mm/dd/yyyy):\n");
