@@ -28,6 +28,7 @@ void UpdateTime();
 void UpdateParticipant(Participant *p);
 void UpdateFile();
 void PrintParticipant(Participant *p, char *dob);
+void PrintBestTriathlete();
 void DestroyParticipant(Participant *p);
 void pause();
 void clrscr();

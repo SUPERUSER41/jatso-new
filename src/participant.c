@@ -242,21 +242,24 @@ void UpdateTime(Participant *p)
             switch (ch)
             {
             case 1:
-                printf("Current swim time:\n");
+                printf("Current swim time:\n", p->swim);
                 printf("Enter new swim time:\n");
                 scanf("%d", &p->swim);
+                p->score = p->swim + p->run + p->cycle;
                 UpdateParticipant(p);
                 break;
             case 2:
-                printf("Current swim time:\n");
+                printf("Current cycle time:\n", p->cycle);
                 printf("Enter new cycle time:\n");
                 scanf("%d", &p->cycle);
+                p->score = p->swim + p->run + p->cycle;
                 UpdateParticipant(p);
                 break;
             case 3:
-                printf("Current swim time:\n");
+                printf("Current run time:\n", p->run);
                 printf("Enter new run time:\n");
                 scanf("%d", &p->run);
+                p->score = p->swim + p->run + p->cycle;
                 UpdateParticipant(p);
                 break;
             }
@@ -339,6 +342,29 @@ void PrintParticipant(Participant *p, char *dob)
     printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
            p->competition, p->swim, p->cycle, p->run, p->score);
     pause();
+}
+
+void PrintBestTriathlete()
+{
+    // Read from the data.csv file
+    FILE *fp = fopen(FILE_NAME, "r");
+    char dob[10];
+    Participant p;
+
+    int scores[4];
+
+    for (int i = 0; i < sizeof(scores); i++)
+    {
+        while (fscanf(fp, FILE_FORMAT_IN, &p.id, p.name, &p.gender, dob, p.school, p.competition, &p.swim, &p.cycle, &p.run, &p.score) != EOF)
+        {
+            scores[i] = p.score;
+        }
+    }
+
+    // Find the maximum value from the array
+
+    // Search the file for the participant with the maximum score found above
+    // Display the participant
 }
 
 void DestroyParticipant(Participant *p)
