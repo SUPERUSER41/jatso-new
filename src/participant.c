@@ -204,7 +204,7 @@ void SearchParticipant()
 
 void UpdateTime()
 {
-    int ch;
+    int ch, newTime = 0;
     clrscr();
     do
     {
@@ -217,15 +217,15 @@ void UpdateTime()
         {
         case 1:
             printf("Enter new swim time:\n");
-            scanf("%d", &p->swim);
+            scanf("%d", &newTime);
             break;
         case 2:
             printf("Enter new cycle time:\n");
-            scanf("%d", &p->cycle);
+            scanf("%d", &newTime);
             break;
         case 3:
             printf("Enter new run time:\n");
-            scanf("%d", &p->run);
+            scanf("%d", &newTime);
             break;
         }
     } while (ch != 0);

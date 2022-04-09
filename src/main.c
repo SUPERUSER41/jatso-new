@@ -6,6 +6,7 @@ int main()
     Participant *p = InitParticipant();
     RegisterParticipant(p);
     SearchParticipant();
+    UpdateTime();
     DestroyParticipant(p);
     return 0;
 }
