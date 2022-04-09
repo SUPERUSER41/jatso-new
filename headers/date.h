@@ -11,7 +11,7 @@ typedef struct Date
     int month;
 } Date;
 
-int isLeapYear(int year);
-int isValidDate(Date *date);
+int IsLeapYear(int year);
+int IsValidDate(Date *date);
 
 #endif

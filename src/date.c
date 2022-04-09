@@ -3,7 +3,7 @@
 
 // Function to check leap year.
 // Function returns 1 if leap year
-int isLeapYear(int year)
+int IsLeapYear(int year)
 {
     return (((year % 4 == 0) &&
              (year % 100 != 0)) ||
@@ -11,7 +11,7 @@ int isLeapYear(int year)
 }
 
 // returns 1 if given date is valid.
-int isValidDate(Date *date)
+int IsValidDate(Date *date)
 {
     // check range of year,month and day
     if (date->year > MAX_YR ||
@@ -24,7 +24,7 @@ int isValidDate(Date *date)
     // Handle feb days in leap year
     if (date->month == 2)
     {
-        if (isLeapYear(date->year))
+        if (IsLeapYear(date->year))
             return (date->day <= 29);
         else
             return (date->day <= 28);
