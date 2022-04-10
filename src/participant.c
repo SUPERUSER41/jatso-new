@@ -7,6 +7,7 @@
 #include "../headers/participant.h"
 
 char *FILE_NAME = "./data/data.bin";
+char *FILE_NAME_TMP = "./data/tmp.bin";
 const char *KIDS_OF_STEEL = "Kids of Steel";
 const char *IRON_KIDS = "Iron Kids";
 const char *CAST_IRON_KIDS = "Cast Iron Kids";
@@ -112,11 +113,45 @@ void PrintParticipant(Participant *p)
            p->competition, p->swim, p->cycle, p->run, p->score);
 }
 
-void UpdateParticipant()
+void RegisterEventTimes()
 {
+    int choice;
+    Participant *participant;
+
+    participant = SearchParticipants();
+
+    if (participant == NULL)
+    {
+        WriteData(FILE_NAME_TMP, participant, 1);
+    }
+
+    do
+    {
+        printf("1. Enter swim time\n");
+        printf("2. Enter cycle time\n");
+        printf("3. Enter run time\n");
+        printf("0. Exit\n");
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            printf("Enter new swim time:\n");
+            scanf("%d", &participant->swim);
+            break;
+        case 2:
+            printf("Enter new cycle time:\n");
+            scanf("%d", &participant->cycle);
+            break;
+        case 3:
+            printf("Enter new run time:\n");
+            scanf("%d", &participant->run);
+            break;
+        }
+    } while (choice != 0);
 }
 
-void SearchParticipants()
+Participant *SearchParticipants()
 {
     int id;
     Participant *participant;
@@ -129,10 +164,12 @@ void SearchParticipants()
     if (participant == NULL)
     {
         printf("Participant with id %d not found.\n", id);
-        return;
+        return NULL;
     }
 
     PrintParticipant(participant);
+
+    return participant;
 }
 
 Participant *GetParticipant(int id)

@@ -10,7 +10,7 @@ int main()
         printf("1. Register Participant\n");
         printf("2. View All Participants\n");
         printf("3. Search Participants\n");
-        printf("4. Update Participant\n");
+        printf("4. Enter Participant Times\n");
         printf("0. Exit\n");
         printf("Enter your choice:\n");
         scanf("%d", &choice);
@@ -24,7 +24,7 @@ int main()
         case 3:
             SearchParticipants();
         case 4:
-            UpdateParticipant();
+            RegisterEventTimes();
             break;
         }
     } while (choice != 0);
