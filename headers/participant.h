@@ -17,7 +17,9 @@ typedef struct Participant
 } Participant;
 void RegisterParticipant();
 void PrintParticipants();
+void PrintParticipant();
 void UpdateParticipant();
+Participant *SearcParticipants(int id);
 void SetCompetition(int age, Participant *p);
 int CalculateAge(int birthYear);
 bool IsEligible(int age);

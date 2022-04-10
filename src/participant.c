@@ -89,8 +89,6 @@ void PrintParticipants()
         exit(1);
     }
 
-    printf("Successfully read from file.\n");
-
     for (int i = 0; i < total; i++)
     {
         printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\nSchool:\t\t%s\n",
@@ -104,7 +102,55 @@ void PrintParticipants()
     free(participants);
 }
 
+void PrintParticipant()
+{
+    int id;
+    Participant *participant;
+
+    printf("Enter id to search:\n");
+    scanf("%d", &id);
+
+    participant = SearcParticipants(id);
+
+    if (participant == NULL)
+    {
+        printf("Participant with id %d not found.\n", id);
+        return;
+    }
+
+    printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\nSchool:\t\t%s\n",
+           participant->id, participant->name, participant->gender, participant->dob, participant->school);
+    printf("================================\n");
+    printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
+           participant->competition, participant->swim, participant->cycle, participant->run, participant->score);
+
+    free(participant);
+}
+
 void UpdateParticipant() {}
+
+Participant *SearcParticipants(int id)
+{
+    int total = 0;
+    Participant *participants = ReadData(FILE_NAME, &total), *participant;
+
+    if (participants == NULL)
+    {
+        printf("Error reading from file.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < total; i++)
+    {
+        if (participants[i].id == id)
+        {
+            participant = &participants[i];
+        }
+    }
+
+    free(participants);
+    return participant;
+}
 
 void SetCompetition(int age, Participant *p)
 {
