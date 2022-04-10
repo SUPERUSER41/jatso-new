@@ -174,14 +174,17 @@ void RegisterEventTimes()
                 case 1:
                     printf("Enter new swim time:\n");
                     scanf("%d", &participants[i].swim);
+                    participants[i].score = participants[i].swim + participants[i].cycle + participants[i].run;
                     break;
                 case 2:
                     printf("Enter new cycle time:\n");
                     scanf("%d", &participants[i].cycle);
+                    participants[i].score = participants[i].swim + participants[i].cycle + participants[i].run;
                     break;
                 case 3:
                     printf("Enter new run time:\n");
                     scanf("%d", &participants[i].run);
+                    participants[i].score = participants[i].swim + participants[i].cycle + participants[i].run;
                     break;
                 }
             } while (choice != 0);
