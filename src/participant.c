@@ -116,7 +116,7 @@ void PrintParticipant(Participant *p)
 void PrintBestTriathlete()
 {
     int total = 0, max;
-    Participant *participants = ReadData(FILE_NAME, &total);
+    Participant *participants = ReadData(FILE_NAME, &total), *participant = NULL;
 
     if (participants == NULL)
     {
@@ -125,6 +125,17 @@ void PrintBestTriathlete()
     }
 
     max = GetMaxScore(participants, total);
+
+    for (int i = 0; i < total; i++)
+    {
+        if (participants[i].score == max)
+        {
+            participant = &participants[i];
+        }
+    }
+
+    if (participant != NULL)
+        PrintParticipant(participant);
 
     free(participants);
 }
