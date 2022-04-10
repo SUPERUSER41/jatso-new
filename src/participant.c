@@ -11,6 +11,9 @@ char *FILE_NAME_TMP = "./data/tmp.bin";
 char *KIDS_OF_STEEL = "Kids of Steel";
 char *IRON_KIDS = "Iron Kids";
 char *CAST_IRON_KIDS = "Cast Iron Kids";
+char *SWIM = "swim";
+char *CYCLE = "cycle";
+char *RUN = "run";
 
 void RegisterParticipant()
 {
@@ -115,7 +118,7 @@ void PrintParticipant(Participant *p)
 
 void PrintBestTriathlete()
 {
-    int total = 0, choice;
+    int total = 0, choice, choice1;
     Participant *participants = ReadData(FILE_NAME, &total), *winner = NULL;
 
     if (participants == NULL)
@@ -134,9 +137,31 @@ void PrintBestTriathlete()
         switch (choice)
         {
         case 1:
-            // TODO: 1. Filter by competition
-            // TODO: 2. Identify participant with the best time per competition
-            // TODO: 3 Print the participant with the best time.
+            do
+            {
+                printf("1. View best swim time\n");
+                printf("2. View best cycle time.\n");
+                printf("3. View best Run time\n");
+                printf("Enter your choice:\n");
+                scanf("%d", &choice1);
+                switch (choice1)
+                {
+                case 1:
+                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    break;
+                case 2:
+                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    break;
+
+                case 3:
+                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    break;
+                }
+
+            } while (choice1 != 0);
             break;
         case 2:
             // TODO: 1. Filter by competition
@@ -152,6 +177,41 @@ void PrintBestTriathlete()
     } while (choice != 0);
 
     free(participants);
+}
+
+int GetMaxTime(Participant *p, int size, char *eventName)
+{
+    int max;
+
+    if (strcmp(eventName, SWIM) == 0)
+    {
+        max = p[0].swim;
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].swim > max)
+                max = p[i].swim;
+        }
+    }
+    else if (strcmp(eventName, CYCLE) == 0)
+    {
+        max = p[0].cycle;
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].cycle > max)
+                max = p[i].cycle;
+        }
+    }
+    else if (strcmp(eventName, RUN) == 0)
+    {
+        max = p[0].run;
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].run > max)
+                max = p[i].run;
+        }
+    }
+
+    return max;
 }
 
 void PrintWinner()
