@@ -113,6 +113,47 @@ void PrintParticipant(Participant *p)
            p->competition, p->swim, p->cycle, p->run, p->score);
 }
 
+void PrintBestTriathlete()
+{
+    int total = 0, choice;
+    Participant *participants = ReadData(FILE_NAME, &total), *winner = NULL;
+
+    if (participants == NULL)
+    {
+        printf("Error reading from file.\n");
+        exit(1);
+    }
+
+    do
+    {
+        printf("1. View best time for %s\n", KIDS_OF_STEEL);
+        printf("2. View best time for %s\n", IRON_KIDS);
+        printf("3. View best time for %s\n", CAST_IRON_KIDS);
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            // TODO: 1. Filter by competition
+            // TODO: 2. Identify participant with the best time per competition
+            // TODO: 3 Print the participant with the best time.
+            break;
+        case 2:
+            // TODO: 1. Filter by competition
+            // TODO: 2. Identify participant with the best time per competition
+            // TODO: 3 Print the participant with the best time.
+            break;
+        case 3:
+            // TODO: 1. Filter by competition
+            // TODO: 2. Identify participant with the best time per competition
+            // TODO: 3 Print the participant with the best time.
+            break;
+        }
+    } while (choice != 0);
+
+    free(participants);
+}
+
 void PrintWinner()
 {
     int total = 0, choice;
@@ -126,9 +167,9 @@ void PrintWinner()
 
     do
     {
-        printf("1. View %s\n", KIDS_OF_STEEL);
-        printf("2. View %s\n", IRON_KIDS);
-        printf("3. View %s\n", CAST_IRON_KIDS);
+        printf("1. View the winner for %s\n", KIDS_OF_STEEL);
+        printf("2. View the winner for %s\n", IRON_KIDS);
+        printf("3. View the winner for %s\n", CAST_IRON_KIDS);
         printf("Enter your choice:\n");
         scanf("%d", &choice);
         switch (choice)
