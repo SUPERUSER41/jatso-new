@@ -116,48 +116,49 @@ void PrintParticipant(Participant *p)
 void RegisterEventTimes()
 {
 
-    int choice;
+    int choice, id;
     Participant *participant;
 
-    participant = SearchParticipants();
+    printf("Enter id to search:\n");
+    scanf("%d", &id);
 
-    if (participant == NULL)
-        CopyFile(FILE_NAME, FILE_NAME_TMP);
+    participant = GetParticipant(id);
 
-    do
-    {
-        printf("1. Enter swim time\n");
-        printf("2. Enter cycle time\n");
-        printf("3. Enter run time\n");
-        printf("0. Back\n");
-        printf("Enter your choice:\n");
-        scanf("%d", &choice);
-        switch (choice)
-        {
-        case 1:
-            printf("Enter new swim time:\n");
-            scanf("%d", &participant->swim);
-            break;
-        case 2:
-            printf("Enter new cycle time:\n");
-            scanf("%d", &participant->cycle);
-            break;
-        case 3:
-            printf("Enter new run time:\n");
-            scanf("%d", &participant->run);
-            break;
-        }
-    } while (choice != 0);
-
-    if (WriteData(FILE_NAME_TMP, participant, 1))
-        printf("Successfully updated participants to %s.\n", FILE_NAME_TMP);
+    if (CopyFile(FILE_NAME, FILE_NAME_TMP, id))
+        printf("Successfully copied participants to %s.\n", FILE_NAME_TMP);
     else
     {
-        printf("Error writing to file\n");
-        exit(1);
+        printf("Failed to copy participants to %s.\n", FILE_NAME_TMP);
+        return;
     }
 
-    CopyFile(FILE_NAME_TMP, FILE_NAME);
+    if (participant != NULL)
+    {
+        do
+        {
+            printf("1. Enter swim time\n");
+            printf("2. Enter cycle time\n");
+            printf("3. Enter run time\n");
+            printf("0. Back\n");
+            printf("Enter your choice:\n");
+            scanf("%d", &choice);
+            switch (choice)
+            {
+            case 1:
+                printf("Enter new swim time:\n");
+                scanf("%d", &participant->swim);
+                break;
+            case 2:
+                printf("Enter new cycle time:\n");
+                scanf("%d", &participant->cycle);
+                break;
+            case 3:
+                printf("Enter new run time:\n");
+                scanf("%d", &participant->run);
+                break;
+            }
+        } while (choice != 0);
+    }
 }
 
 Participant *SearchParticipants()
@@ -243,7 +244,7 @@ bool IsEligible(int age)
 
 bool WriteData(char *fileName, Participant *data, int total)
 {
-    FILE *file = fopen(fileName, "wb");
+    FILE *file = fopen(fileName, "a+b");
 
     if (file == NULL)
         return false;
@@ -285,10 +286,10 @@ Participant *ReadData(char *fileName, int *total)
     }
     return data;
 }
-bool CopyFile(char *srcFileName, char *destinationFileName)
+bool CopyFile(char *srcFileName, char *destinationFileName, int id)
 {
     int total = 0;
-    Participant *participants = ReadData(srcFileName, &total);
+    Participant *participants = ReadData(srcFileName, &total), *participantsToWrite;
 
     if (participants == NULL)
     {
@@ -296,36 +297,25 @@ bool CopyFile(char *srcFileName, char *destinationFileName)
         return false;
     }
 
-    if (WriteData(destinationFileName, participants, total))
-        printf("Successfully copied participants to %s.\n", destinationFileName);
+    participantsToWrite = malloc(sizeof(Participant) * total);
+
+    for (int i = 0; i < total; i++)
+    {
+        if (participants[i].id != id)
+        {
+            participantsToWrite[i] = participants[i];
+        }
+    }
+
+    if (WriteData(destinationFileName, participantsToWrite, total))
+        return true;
     else
     {
         printf("Error writing to file\n");
         return false;
     }
+
     free(participants);
+    free(participantsToWrite);
     return false;
-
-    // FILE *file, *copy;
-
-    // file = fopen(srcFileName, "rb");
-    // copy = fopen(destinationFileName, "wb");
-
-    // if (file == NULL || copy == NULL)
-    //     return false;
-
-    // char c;
-
-    // while ((c = fgetc(file)) != EOF)
-    // {
-    //     fputc(c, copy);
-    // }
-
-    // if (c == EOF)
-    //     return true;
-
-    // if (fclose(file) == EOF && fclose(copy))
-    //     return false;
-
-    // return false;
 }
