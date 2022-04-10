@@ -9,8 +9,8 @@ int main()
     {
         printf("1. Register Participant\n");
         printf("2. View All Participants\n");
-        printf("3. Update Participant\n");
-        printf("4. View Participant\n");
+        printf("3. View Participant\n");
+        printf("4. Update Participant\n");
         printf("0. Exit\n");
         printf("Enter your choice:\n");
         scanf("%d", &choice);
@@ -22,9 +22,9 @@ int main()
         case 2:
             PrintParticipants();
         case 3:
-            UpdateParticipant();
-        case 4:
             PrintParticipant();
+        case 4:
+            UpdateParticipant();
             break;
         }
     } while (choice != 0);
