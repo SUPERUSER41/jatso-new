@@ -94,7 +94,7 @@ int CalculateAge(int birthYear)
 
 bool IsEligible(int age)
 {
-    if (age == NULL || age == 0)
+    if (age == 0)
         return false;
 
     if ((age >= 6 && age <= 8) || (age >= 9 && age <= 11) || (age >= 12 && age <= 15))
