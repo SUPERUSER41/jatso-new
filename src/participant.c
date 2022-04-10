@@ -124,17 +124,21 @@ void PrintBestTriathlete()
         exit(1);
     }
 
-    max = participants[0].score;
-
-    for (int i = 0; i < total; i++)
-    {
-        if (participants[i].score > max)
-            max = participants[i].score;
-    }
-
-    printf("Max: %d\n", max);
+    max = GetMaxScore(participants, total);
 
     free(participants);
+}
+
+int GetMaxScore(Participant *p, int size)
+{
+    int max = p[0].score;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (p[i].score > max)
+            max = p[i].score;
+    }
+    return max;
 }
 
 void RegisterEventTimes()

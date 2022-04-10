@@ -19,6 +19,7 @@ void RegisterParticipant();
 void PrintParticipants();
 void PrintParticipant(Participant *p);
 void PrintBestTriathlete();
+int GetMaxScore(Participant *p, int size);
 void RegisterEventTimes();
 Participant *GetParticipant(int id);
 Participant *SearchParticipants();
