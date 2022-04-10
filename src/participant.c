@@ -115,6 +115,7 @@ void PrintParticipant(Participant *p)
 
 void RegisterEventTimes()
 {
+
     int choice;
     Participant *participant;
 
@@ -122,7 +123,12 @@ void RegisterEventTimes()
 
     if (participant == NULL)
     {
-        WriteData(FILE_NAME_TMP, participant, 1);
+        // if (!CopyFile(FILE_NAME))
+        // {
+        //     printf("Failed to copy file.\n");
+        //     return;
+        // }
+        return;
     }
 
     do
@@ -175,7 +181,7 @@ Participant *SearchParticipants()
 Participant *GetParticipant(int id)
 {
     int total = 0;
-    Participant *participants = ReadData(FILE_NAME, &total), *participant;
+    Participant *participants = ReadData(FILE_NAME, &total), *participant = NULL;
 
     if (participants == NULL)
     {
@@ -188,6 +194,7 @@ Participant *GetParticipant(int id)
         if (participants[i].id == id)
         {
             participant = &participants[i];
+            return participant;
         }
     }
 
@@ -274,4 +281,28 @@ Participant *ReadData(char *fileName, int *total)
         return NULL;
     }
     return data;
+}
+bool CopyFile(char *fileName)
+{
+    FILE *file, *copy;
+
+    file = fopen(fileName, "rb");
+    copy = fopen(FILE_NAME_TMP, "wb");
+
+    if (file == NULL || copy == NULL)
+        return false;
+
+    char c;
+
+    while ((c = fgetc(file)) != EOF)
+    {
+        fputc(c, copy);
+        if (c == EOF)
+            return true;
+    }
+
+    fclose(file);
+    fclose(copy);
+
+    return false;
 }

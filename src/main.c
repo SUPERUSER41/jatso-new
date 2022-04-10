@@ -7,6 +7,7 @@ int main()
     int choice;
     do
     {
+        fflush(stdin);
         printf("1. Register Participant\n");
         printf("2. View All Participants\n");
         printf("3. Search Participants\n");
@@ -21,10 +22,14 @@ int main()
             break;
         case 2:
             PrintParticipants();
+            break;
         case 3:
             SearchParticipants();
+            break;
         case 4:
             RegisterEventTimes();
+            break;
+        default:
             break;
         }
     } while (choice != 0);
