@@ -116,49 +116,65 @@ void PrintParticipant(Participant *p)
 void RegisterEventTimes()
 {
 
-    int choice, id;
-    Participant *participant;
+    int choice, total = 0;
 
-    printf("Enter id to search:\n");
-    scanf("%d", &id);
+    Participant *participant = SearchParticipants(), *participants, *updatedParticipants;
 
-    participant = GetParticipant(id);
+    if (participant == NULL)
+        return;
 
-    if (CopyFile(FILE_NAME, FILE_NAME_TMP, id))
-        printf("Successfully copied participants to %s.\n", FILE_NAME_TMP);
-    else
+    participants = ReadData(FILE_NAME, &total);
+
+    if (participants == NULL)
     {
-        printf("Failed to copy participants to %s.\n", FILE_NAME_TMP);
+        printf("Error reading from file.\n");
         return;
     }
 
-    if (participant != NULL)
+    updatedParticipants = malloc(sizeof(Participant) * total);
+
+    for (int i = 0; i < total; i++)
     {
-        do
+        if (participants[i].id == participant->id)
         {
-            printf("1. Enter swim time\n");
-            printf("2. Enter cycle time\n");
-            printf("3. Enter run time\n");
-            printf("0. Back\n");
-            printf("Enter your choice:\n");
-            scanf("%d", &choice);
-            switch (choice)
+            do
             {
-            case 1:
-                printf("Enter new swim time:\n");
-                scanf("%d", &participant->swim);
-                break;
-            case 2:
-                printf("Enter new cycle time:\n");
-                scanf("%d", &participant->cycle);
-                break;
-            case 3:
-                printf("Enter new run time:\n");
-                scanf("%d", &participant->run);
-                break;
-            }
-        } while (choice != 0);
+                printf("1. Enter swim time\n");
+                printf("2. Enter cycle time\n");
+                printf("3. Enter run time\n");
+                printf("0. Back\n");
+                printf("Enter your choice:\n");
+                scanf("%d", &choice);
+                switch (choice)
+                {
+                case 1:
+                    printf("Enter new swim time:\n");
+                    scanf("%d", &participants[i].swim);
+                    break;
+                case 2:
+                    printf("Enter new cycle time:\n");
+                    scanf("%d", &participants[i].cycle);
+                    break;
+                case 3:
+                    printf("Enter new run time:\n");
+                    scanf("%d", &participants[i].run);
+                    break;
+                }
+            } while (choice != 0);
+            updatedParticipants[i] = participants[i];
+        }
+        updatedParticipants[i] = participants[i];
     }
+
+    if (WriteData(FILE_NAME, updatedParticipants, 3, "wb"))
+        printf("Successfully updated participant to %s.\n", FILE_NAME);
+    else
+    {
+        printf("Error writing to file\n");
+        exit(1);
+    }
+
+    free(updatedParticipants);
 }
 
 Participant *SearchParticipants()
