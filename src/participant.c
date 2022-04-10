@@ -122,20 +122,14 @@ void RegisterEventTimes()
     participant = SearchParticipants();
 
     if (participant == NULL)
-    {
-        if (!CopyFile(FILE_NAME))
-        {
-            printf("Failed to copy file %s", FILE_NAME);
-            return;
-        }
-    }
+        return;
 
     do
     {
         printf("1. Enter swim time\n");
         printf("2. Enter cycle time\n");
         printf("3. Enter run time\n");
-        printf("0. Exit\n");
+        printf("0. Back\n");
         printf("Enter your choice:\n");
         scanf("%d", &choice);
         switch (choice)
@@ -154,6 +148,16 @@ void RegisterEventTimes()
             break;
         }
     } while (choice != 0);
+
+    if (WriteData(FILE_NAME_TMP, participant, 1))
+        printf("Successfully updated participants to %s.\n", FILE_NAME_TMP);
+    else
+    {
+        printf("Error writing to file\n");
+        exit(1);
+    }
+
+    CopyFile(FILE_NAME_TMP, FILE_NAME);
 }
 
 Participant *SearchParticipants()
@@ -281,12 +285,12 @@ Participant *ReadData(char *fileName, int *total)
     }
     return data;
 }
-bool CopyFile(char *fileName)
+bool CopyFile(char *srcFileName, char *destinationFileName)
 {
     FILE *file, *copy;
 
-    file = fopen(fileName, "rb");
-    copy = fopen(FILE_NAME_TMP, "wb");
+    file = fopen(srcFileName, "rb");
+    copy = fopen(destinationFileName, "wb");
 
     if (file == NULL || copy == NULL)
         return false;

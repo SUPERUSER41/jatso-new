@@ -26,5 +26,5 @@ int CalculateAge(int birthYear);
 bool IsEligible(int age);
 bool WriteData(char *fileName, Participant *p, int total);
 Participant *ReadData(char *fileName, int *total);
-bool CopyFile(char *fileName);
+bool CopyFile(char *srcFileName, char *destinationFileName);
 #endif
