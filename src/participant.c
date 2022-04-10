@@ -99,6 +99,8 @@ bool IsEligible(int age)
 
     if ((age >= 6 && age <= 8) || (age >= 9 && age <= 11) || (age >= 12 && age <= 15))
         return true;
+
+    return false;
 }
 
 bool WriteData(char *fileName, Participant *data, int total)
