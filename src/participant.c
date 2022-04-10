@@ -166,7 +166,7 @@ void RegisterEventTimes()
         updatedParticipants[i] = participants[i];
     }
 
-    if (WriteData(FILE_NAME, updatedParticipants, 3, "wb"))
+    if (WriteData(FILE_NAME, updatedParticipants, total, "wb"))
         printf("Successfully updated participant to %s.\n", FILE_NAME);
     else
     {
