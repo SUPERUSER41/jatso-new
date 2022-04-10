@@ -5,6 +5,41 @@
 #include <string.h>
 #include "../headers/participant.h"
 
+void RegisterParticipant()
+{
+    Participant *participants;
+    int numOfParticipants = 0;
+
+    printf("Enter number of participants to register:\n");
+    scanf("%d", &numOfParticipants);
+
+    participants = malloc(sizeof(Participant) * numOfParticipants);
+
+    for (int i = 0; i < numOfParticipants; i++)
+    {
+        participants[i].id = i + 1;
+        fflush(stdin);
+        printf("Enter date of birth:\n");
+        scanf("");
+
+        fflush(stdin);
+        printf("Enter name:\n");
+        scanf("%[^\n]s", participants[i].name);
+
+        fflush(stdin);
+        printf("Enter gender:\n");
+        scanf(" %c", &participants[i].gender);
+
+        fflush(stdin);
+        printf("Enter school:\n");
+        scanf("%[^\n]s", participants[i].school);
+    }
+}
+
+void PrintParticipants() {}
+
+void UpdateParticipant() {}
+
 bool WriteData(char *fileName, Participant *data, int total)
 {
     FILE *file = fopen(fileName, "wb");
