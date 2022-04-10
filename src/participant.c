@@ -61,6 +61,8 @@ void RegisterParticipant()
         participants[i].run = 0;
         participants[i].score = 0;
     }
+    free(participants->dob);
+    free(participants);
 }
 
 void PrintParticipants() {}
