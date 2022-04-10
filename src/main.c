@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include "../headers/participant.h"
 
-char *FILE_NAME = "./data/data.bin";
-
 int main()
 {
     int choice;
