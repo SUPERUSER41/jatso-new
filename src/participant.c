@@ -6,6 +6,7 @@
 #include <time.h>
 #include "../headers/participant.h"
 
+char *FILE_NAME = "./data/data.csv";
 const char *KIDS_OF_STEEL = "Kids of Steel";
 const char *IRON_KIDS = "Iron Kids";
 const char *CAST_IRON_KIDS = "Cast Iron Kids";
@@ -61,6 +62,15 @@ void RegisterParticipant()
         participants[i].run = 0;
         participants[i].score = 0;
     }
+
+    if (WriteData(FILE_NAME, participants, numOfParticipants))
+        printf("Successfully saved participants to %s.\n", FILE_NAME);
+    else
+    {
+        printf("Error writing to file\n");
+        exit(1);
+    }
+
     free(participants->dob);
     free(participants);
 }
