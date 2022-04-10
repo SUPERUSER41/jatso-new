@@ -123,12 +123,11 @@ void RegisterEventTimes()
 
     if (participant == NULL)
     {
-        // if (!CopyFile(FILE_NAME))
-        // {
-        //     printf("Failed to copy file.\n");
-        //     return;
-        // }
-        return;
+        if (!CopyFile(FILE_NAME))
+        {
+            printf("Failed to copy file %s", FILE_NAME);
+            return;
+        }
     }
 
     do
@@ -297,9 +296,10 @@ bool CopyFile(char *fileName)
     while ((c = fgetc(file)) != EOF)
     {
         fputc(c, copy);
-        if (c == EOF)
-            return true;
     }
+
+    if (c == EOF)
+        return true;
 
     fclose(file);
     fclose(copy);
