@@ -122,7 +122,7 @@ void RegisterEventTimes()
     participant = SearchParticipants();
 
     if (participant == NULL)
-        return;
+        CopyFile(FILE_NAME, FILE_NAME_TMP);
 
     do
     {
@@ -287,26 +287,45 @@ Participant *ReadData(char *fileName, int *total)
 }
 bool CopyFile(char *srcFileName, char *destinationFileName)
 {
-    FILE *file, *copy;
+    int total = 0;
+    Participant *participants = ReadData(srcFileName, &total);
 
-    file = fopen(srcFileName, "rb");
-    copy = fopen(destinationFileName, "wb");
-
-    if (file == NULL || copy == NULL)
-        return false;
-
-    char c;
-
-    while ((c = fgetc(file)) != EOF)
+    if (participants == NULL)
     {
-        fputc(c, copy);
+        printf("Error reading from file.\n");
+        return false;
     }
 
-    if (c == EOF)
-        return true;
-
-    fclose(file);
-    fclose(copy);
-
+    if (WriteData(destinationFileName, participants, total))
+        printf("Successfully copied participants to %s.\n", destinationFileName);
+    else
+    {
+        printf("Error writing to file\n");
+        return false;
+    }
+    free(participants);
     return false;
+
+    // FILE *file, *copy;
+
+    // file = fopen(srcFileName, "rb");
+    // copy = fopen(destinationFileName, "wb");
+
+    // if (file == NULL || copy == NULL)
+    //     return false;
+
+    // char c;
+
+    // while ((c = fgetc(file)) != EOF)
+    // {
+    //     fputc(c, copy);
+    // }
+
+    // if (c == EOF)
+    //     return true;
+
+    // if (fclose(file) == EOF && fclose(copy))
+    //     return false;
+
+    // return false;
 }
