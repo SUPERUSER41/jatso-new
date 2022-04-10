@@ -18,6 +18,9 @@ typedef struct Participant
 void RegisterParticipant();
 void PrintParticipants();
 void UpdateParticipant();
+void SetCompetition(int age, Participant *p);
+int CalculateAge(int birthYear);
+bool IsEligible(int age);
 bool WriteData(char *fileName, Participant *p, int total);
 Participant *ReadData(char *fileName, int *total);
 #endif
