@@ -102,7 +102,21 @@ void PrintParticipants()
     free(participants);
 }
 
-void PrintParticipant()
+void PrintParticipant(Participant *p)
+{
+
+    printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\nSchool:\t\t%s\n",
+           p->id, p->name, p->gender, p->dob, p->school);
+    printf("================================\n");
+    printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
+           p->competition, p->swim, p->cycle, p->run, p->score);
+}
+
+void UpdateParticipant()
+{
+}
+
+void SearchParticipants()
 {
     int id;
     Participant *participant;
@@ -110,7 +124,7 @@ void PrintParticipant()
     printf("Enter id to search:\n");
     scanf("%d", &id);
 
-    participant = SearcParticipants(id);
+    participant = GetParticipant(id);
 
     if (participant == NULL)
     {
@@ -118,18 +132,10 @@ void PrintParticipant()
         return;
     }
 
-    printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\nSchool:\t\t%s\n",
-           participant->id, participant->name, participant->gender, participant->dob, participant->school);
-    printf("================================\n");
-    printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
-           participant->competition, participant->swim, participant->cycle, participant->run, participant->score);
-
-    free(participant);
+    PrintParticipant(participant);
 }
 
-void UpdateParticipant() {}
-
-Participant *SearcParticipants(int id)
+Participant *GetParticipant(int id)
 {
     int total = 0;
     Participant *participants = ReadData(FILE_NAME, &total), *participant;

@@ -9,7 +9,7 @@ int main()
     {
         printf("1. Register Participant\n");
         printf("2. View All Participants\n");
-        printf("3. View Participant\n");
+        printf("3. Search Participants\n");
         printf("4. Update Participant\n");
         printf("0. Exit\n");
         printf("Enter your choice:\n");
@@ -22,7 +22,7 @@ int main()
         case 2:
             PrintParticipants();
         case 3:
-            PrintParticipant();
+            SearchParticipants();
         case 4:
             UpdateParticipant();
             break;

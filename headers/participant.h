@@ -17,9 +17,10 @@ typedef struct Participant
 } Participant;
 void RegisterParticipant();
 void PrintParticipants();
-void PrintParticipant();
+void PrintParticipant(Participant *p);
 void UpdateParticipant();
-Participant *SearcParticipants(int id);
+Participant *GetParticipant(int id);
+void SearchParticipants();
 void SetCompetition(int age, Participant *p);
 int CalculateAge(int birthYear);
 bool IsEligible(int age);
