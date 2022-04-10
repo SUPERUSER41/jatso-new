@@ -8,9 +8,9 @@
 
 char *FILE_NAME = "./data/data.bin";
 char *FILE_NAME_TMP = "./data/tmp.bin";
-const char *KIDS_OF_STEEL = "Kids of Steel";
-const char *IRON_KIDS = "Iron Kids";
-const char *CAST_IRON_KIDS = "Cast Iron Kids";
+char *KIDS_OF_STEEL = "Kids of Steel";
+char *IRON_KIDS = "Iron Kids";
+char *CAST_IRON_KIDS = "Cast Iron Kids";
 
 void RegisterParticipant()
 {
@@ -113,10 +113,10 @@ void PrintParticipant(Participant *p)
            p->competition, p->swim, p->cycle, p->run, p->score);
 }
 
-void PrintBestTriathlete()
+void PrintWinner()
 {
-    int total = 0, max;
-    Participant *participants = ReadData(FILE_NAME, &total), *participant = NULL;
+    int total = 0, choice;
+    Participant *participants = ReadData(FILE_NAME, &total), *winner = NULL;
 
     if (participants == NULL)
     {
@@ -124,20 +124,67 @@ void PrintBestTriathlete()
         exit(1);
     }
 
-    max = GetMaxScore(participants, total);
-
-    for (int i = 0; i < total; i++)
+    do
     {
-        if (participants[i].score == max)
+        printf("1. View %s\n", KIDS_OF_STEEL);
+        printf("2. View %s\n", IRON_KIDS);
+        printf("3. View %s\n", CAST_IRON_KIDS);
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+        switch (choice)
         {
-            participant = &participants[i];
+        case 1:
+            winner = GetWinner(participants, total, KIDS_OF_STEEL);
+            if (winner != NULL)
+            {
+                PrintParticipant(winner);
+            }
+            break;
+        case 2:
+            winner = GetWinner(participants, total, IRON_KIDS);
+            if (winner != NULL)
+            {
+                PrintParticipant(winner);
+            }
+            break;
+        case 3:
+            winner = GetWinner(participants, total, CAST_IRON_KIDS);
+            if (winner != NULL)
+            {
+                PrintParticipant(winner);
+            }
+            break;
         }
-    }
-
-    if (participant != NULL)
-        PrintParticipant(participant);
+    } while (choice != 0);
 
     free(participants);
+}
+
+Participant *GetWinner(Participant *p, int total, char *competitionName)
+{
+    int max;
+    Participant *competition = FilterParticipants(p, total, competitionName), *winner = NULL;
+
+    if (competition != NULL)
+    {
+        max = GetMaxScore(competition, total);
+
+        for (int i = 0; i < total; i++)
+        {
+            if (competition[i].score == max)
+            {
+                winner = &p[i];
+            }
+        }
+
+        return winner;
+    }
+    else
+    {
+        printf("No results found for %s.\n", competitionName);
+        return NULL;
+    }
+    return NULL;
 }
 
 int GetMaxScore(Participant *p, int size)
@@ -150,6 +197,26 @@ int GetMaxScore(Participant *p, int size)
             max = p[i].score;
     }
     return max;
+}
+
+Participant *FilterParticipants(Participant *p, int size, char *competition)
+{
+    Participant *participants = malloc(sizeof(Participant) * size);
+    bool isFound = false;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (strcmp(p[i].competition, competition) == 0)
+        {
+            isFound = true;
+            participants[i] = p[i];
+        }
+    }
+
+    if (isFound)
+        return participants;
+
+    return NULL;
 }
 
 void RegisterEventTimes()

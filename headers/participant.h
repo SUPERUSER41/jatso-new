@@ -18,8 +18,10 @@ typedef struct Participant
 void RegisterParticipant();
 void PrintParticipants();
 void PrintParticipant(Participant *p);
-void PrintBestTriathlete();
+void PrintWinner();
+Participant *GetWinner(Participant *p, int total, char *competitionName);
 int GetMaxScore(Participant *p, int size);
+Participant *FilterParticipants(Participant *p, int size, char *competition);
 void RegisterEventTimes();
 Participant *GetParticipant(int id);
 Participant *SearchParticipants();
