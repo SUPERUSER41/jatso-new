@@ -13,6 +13,7 @@ typedef struct Participant
     int swim;
     int cycle;
     int run;
+    int score;
 } Participant;
 void RegisterParticipant();
 void PrintParticipants();
