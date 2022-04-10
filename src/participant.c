@@ -128,7 +128,7 @@ void RegisterEventTimes()
     if (participants == NULL)
     {
         printf("Error reading from file.\n");
-        return;
+        exit(1);
     }
 
     updatedParticipants = malloc(sizeof(Participant) * total);
@@ -301,37 +301,4 @@ Participant *ReadData(char *fileName, int *total)
         return NULL;
     }
     return data;
-}
-bool CopyFile(char *srcFileName, char *destinationFileName, int id)
-{
-    int total = 0;
-    Participant *participants = ReadData(srcFileName, &total), *participantsToWrite;
-
-    if (participants == NULL)
-    {
-        printf("Error reading from file.\n");
-        return false;
-    }
-
-    participantsToWrite = malloc(sizeof(Participant) * total);
-
-    for (int i = 0; i < total; i++)
-    {
-        if (participants[i].id != id)
-        {
-            participantsToWrite[i] = participants[i];
-        }
-    }
-
-    if (WriteData(destinationFileName, participantsToWrite, total, "wb"))
-        return true;
-    else
-    {
-        printf("Error writing to file\n");
-        return false;
-    }
-
-    free(participants);
-    free(participantsToWrite);
-    return false;
 }
