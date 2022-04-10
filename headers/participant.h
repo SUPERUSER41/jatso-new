@@ -7,7 +7,7 @@ typedef struct Participant
     int id;
     char name[50];
     char gender;
-    Date *dob;
+    char dob[10];
     char school[50];
     char competition[50];
     int swim;

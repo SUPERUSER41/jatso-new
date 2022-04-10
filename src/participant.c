@@ -6,7 +6,7 @@
 #include <time.h>
 #include "../headers/participant.h"
 
-char *FILE_NAME = "./data/data.csv";
+char *FILE_NAME = "./data/data.bin";
 const char *KIDS_OF_STEEL = "Kids of Steel";
 const char *IRON_KIDS = "Iron Kids";
 const char *CAST_IRON_KIDS = "Cast Iron Kids";
@@ -14,27 +14,30 @@ const char *CAST_IRON_KIDS = "Cast Iron Kids";
 void RegisterParticipant()
 {
     Participant *participants;
+    Date *dob;
     int numOfParticipants = 0, age = 0;
 
     printf("Enter number of participants to register:\n");
     scanf("%d", &numOfParticipants);
 
     participants = malloc(sizeof(Participant) * numOfParticipants);
-    participants->dob = malloc(sizeof(Date) * numOfParticipants);
+    dob = malloc(sizeof(Participant) * numOfParticipants);
 
     for (int i = 0; i < numOfParticipants; i++)
     {
         fflush(stdin);
         printf("Enter date of birth (mm/dd/yyy):\n");
-        scanf("%d/%d/%d", &participants[i].dob->month, &participants[i].dob->day, &participants[i].dob->year);
+        scanf("%d/%d/%d", &dob[i].month, &dob[i].day, &dob[i].year);
 
-        if (IsValidDate(participants[i].dob) != 1)
+        if (IsValidDate(dob) != 1)
         {
             printf("Invalid date.\n");
             break;
         }
 
-        age = CalculateAge(participants[i].dob->year);
+        sprintf(participants[i].dob, "%d/%d/%d", dob[i].month, dob[i].day, dob[i].year);
+
+        age = CalculateAge(dob[i].year);
 
         if (!IsEligible(age))
         {
@@ -49,7 +52,7 @@ void RegisterParticipant()
         scanf("%[^\n]s", participants[i].name);
 
         fflush(stdin);
-        printf("Enter gender:\n");
+        printf("Enter gender (M/F):\n");
         scanf(" %c", &participants[i].gender);
 
         fflush(stdin);
@@ -71,11 +74,35 @@ void RegisterParticipant()
         exit(1);
     }
 
-    free(participants->dob);
+    free(dob);
     free(participants);
 }
 
-void PrintParticipants() {}
+void PrintParticipants()
+{
+    int total = 0;
+    Participant *participants = ReadData(FILE_NAME, &total);
+
+    if (participants == NULL)
+    {
+        printf("Error reading from file.\n");
+        exit(1);
+    }
+
+    printf("Successfully read from file.\n");
+
+    for (int i = 0; i < total; i++)
+    {
+        printf("Id:\t\t%d\nName:\t\t%s\nGender:\t\t%c\nDob:\t\t%s\nSchool:\t\t%s\n",
+               participants[i].id, participants[i].name, participants[i].gender, participants[i].dob, participants[i].school);
+        printf("================================\n");
+        printf("Competition:\t\t%s\nSwim Time:\t\t%d\nCycle Time:\t\t%d\nRun Time:\t\t%d\nScore:\t\t%d\n",
+               participants[i].competition, participants[i].swim, participants[i].cycle, participants[i].run, participants[i].score);
+        printf("\n");
+    }
+
+    free(participants);
+}
 
 void UpdateParticipant() {}
 
