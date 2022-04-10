@@ -24,7 +24,7 @@ Participant *SearchParticipants();
 void SetCompetition(int age, Participant *p);
 int CalculateAge(int birthYear);
 bool IsEligible(int age);
-bool WriteData(char *fileName, Participant *p, int total);
+bool WriteData(char *fileName, Participant *p, int total, char *mode);
 Participant *ReadData(char *fileName, int *total);
 bool CopyFile(char *srcFileName, char *destinationFileName, int id);
 #endif

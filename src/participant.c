@@ -67,7 +67,7 @@ void RegisterParticipant()
         participants[i].score = 0;
     }
 
-    if (WriteData(FILE_NAME, participants, numOfParticipants))
+    if (WriteData(FILE_NAME, participants, numOfParticipants, "wb"))
         printf("Successfully saved participants to %s.\n", FILE_NAME);
     else
     {
@@ -242,9 +242,9 @@ bool IsEligible(int age)
     return false;
 }
 
-bool WriteData(char *fileName, Participant *data, int total)
+bool WriteData(char *fileName, Participant *data, int total, char *mode)
 {
-    FILE *file = fopen(fileName, "a+b");
+    FILE *file = fopen(fileName, mode);
 
     if (file == NULL)
         return false;
@@ -307,7 +307,7 @@ bool CopyFile(char *srcFileName, char *destinationFileName, int id)
         }
     }
 
-    if (WriteData(destinationFileName, participantsToWrite, total))
+    if (WriteData(destinationFileName, participantsToWrite, total, "wb"))
         return true;
     else
     {
