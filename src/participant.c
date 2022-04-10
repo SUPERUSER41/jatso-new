@@ -113,6 +113,30 @@ void PrintParticipant(Participant *p)
            p->competition, p->swim, p->cycle, p->run, p->score);
 }
 
+void PrintBestTriathlete()
+{
+    int total = 0, max;
+    Participant *participants = ReadData(FILE_NAME, &total);
+
+    if (participants == NULL)
+    {
+        printf("Error reading from file.\n");
+        exit(1);
+    }
+
+    max = participants[0].score;
+
+    for (int i = 0; i < total; i++)
+    {
+        if (participants[i].score > max)
+            max = participants[i].score;
+    }
+
+    printf("Max: %d\n", max);
+
+    free(participants);
+}
+
 void RegisterEventTimes()
 {
 

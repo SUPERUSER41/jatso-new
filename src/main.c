@@ -12,6 +12,7 @@ int main()
         printf("2. View All Participants\n");
         printf("3. Search Participants\n");
         printf("4. Enter Participant Times\n");
+        printf("5. View Best Triathlete Per Competition\n");
         printf("0. Exit\n");
         printf("Enter your choice:\n");
         scanf("%d", &choice);
@@ -29,7 +30,8 @@ int main()
         case 4:
             RegisterEventTimes();
             break;
-        default:
+        case 5:
+            PrintBestTriathlete();
             break;
         }
     } while (choice != 0);
