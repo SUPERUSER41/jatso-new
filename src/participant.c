@@ -132,6 +132,7 @@ void PrintBestTriathlete()
         printf("1. View best time for %s\n", KIDS_OF_STEEL);
         printf("2. View best time for %s\n", IRON_KIDS);
         printf("3. View best time for %s\n", CAST_IRON_KIDS);
+        printf("0. Exit\n");
         printf("Enter your choice:\n");
         scanf("%d", &choice);
         switch (choice)
@@ -143,75 +144,114 @@ void PrintBestTriathlete()
                 printf("2. View best cycle time.\n");
                 printf("3. View best Run time\n");
                 printf("Enter your choice:\n");
+                printf("0. Exit\n");
                 scanf("%d", &choice1);
                 switch (choice1)
                 {
                 case 1:
-                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    winner = GetEventWinner(participants, total, KIDS_OF_STEEL, SWIM);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
                     break;
                 case 2:
-                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    winner = GetEventWinner(participants, total, KIDS_OF_STEEL, CYCLE);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
                     break;
 
                 case 3:
-                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    winner = GetEventWinner(participants, total, KIDS_OF_STEEL, RUN);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
                     break;
                 }
 
             } while (choice1 != 0);
             break;
         case 2:
-            // TODO: 1. Filter by competition
-            // TODO: 2. Identify participant with the best time per competition
-            // TODO: 3 Print the participant with the best time.
+            do
+            {
+                printf("1. View best swim time\n");
+                printf("2. View best cycle time.\n");
+                printf("3. View best Run time\n");
+                printf("Enter your choice:\n");
+                printf("0. Exit\n");
+                scanf("%d", &choice1);
+                switch (choice1)
+                {
+                case 1:
+                    winner = GetEventWinner(participants, total, IRON_KIDS, SWIM);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+                case 2:
+                    winner = GetEventWinner(participants, total, IRON_KIDS, CYCLE);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+
+                case 3:
+                    winner = GetEventWinner(participants, total, IRON_KIDS, RUN);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+                }
+
+            } while (choice1 != 0);
             break;
         case 3:
-            // TODO: 1. Filter by competition
-            // TODO: 2. Identify participant with the best time per competition
-            // TODO: 3 Print the participant with the best time.
+            do
+            {
+                printf("1. View best swim time\n");
+                printf("2. View best cycle time.\n");
+                printf("3. View best Run time\n");
+                printf("Enter your choice:\n");
+                printf("0. Exit\n");
+                scanf("%d", &choice1);
+                switch (choice1)
+                {
+                case 1:
+                    winner = GetEventWinner(participants, total, CAST_IRON_KIDS, SWIM);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+                case 2:
+                    winner = GetEventWinner(participants, total, CAST_IRON_KIDS, CYCLE);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+
+                case 3:
+                    winner = GetEventWinner(participants, total, CAST_IRON_KIDS, RUN);
+                    if (winner != NULL)
+                    {
+                        PrintParticipant(winner);
+                    }
+                    break;
+                }
+
+            } while (choice1 != 0);
             break;
         }
     } while (choice != 0);
 
     free(participants);
-}
-
-int GetMaxTime(Participant *p, int size, char *eventName)
-{
-    int max = 0;
-
-    if (strcmp(eventName, SWIM) == 0)
-    {
-        max = p[0].swim;
-        for (int i = 0; i < size; i++)
-        {
-            if (p[i].swim > max)
-                max = p[i].swim;
-        }
-    }
-    else if (strcmp(eventName, CYCLE) == 0)
-    {
-        max = p[0].cycle;
-        for (int i = 0; i < size; i++)
-        {
-            if (p[i].cycle > max)
-                max = p[i].cycle;
-        }
-    }
-    else if (strcmp(eventName, RUN) == 0)
-    {
-        max = p[0].run;
-        for (int i = 0; i < size; i++)
-        {
-            if (p[i].run > max)
-                max = p[i].run;
-        }
-    }
-
-    return max;
 }
 
 void PrintWinner()
@@ -263,7 +303,7 @@ void PrintWinner()
 
 Participant *GetWinner(Participant *p, int total, char *competitionName)
 {
-    int max;
+    int max = 0;
     Participant *competition = FilterParticipants(p, total, competitionName), *winner = NULL;
 
     if (competition != NULL)
@@ -288,6 +328,49 @@ Participant *GetWinner(Participant *p, int total, char *competitionName)
     return NULL;
 }
 
+Participant *GetEventWinner(Participant *p, int total, char *competitionName, char *eventName)
+{
+    int max = 0;
+    Participant *competition = FilterParticipants(p, total, competitionName), *winner = NULL;
+
+    if (competition != NULL && eventName != NULL)
+    {
+        max = GetMaxTime(competition, total, eventName);
+
+        for (int i = 0; i < total; i++)
+        {
+            if (strcmp(eventName, SWIM) == 0)
+            {
+                if (competition[i].swim == max)
+                {
+                    winner = &p[i];
+                }
+            }
+            else if (strcmp(eventName, CYCLE) == 0)
+            {
+                if (competition[i].cycle == max)
+                {
+                    winner = &p[i];
+                }
+            }
+            else if (strcmp(eventName, RUN) == 0)
+            {
+                if (competition[i].run == max)
+                {
+                    winner = &p[i];
+                }
+            }
+        }
+
+        return winner;
+    }
+    else
+    {
+        printf("No results found for %s.\n", competitionName);
+        return NULL;
+    }
+    return NULL;
+}
 int GetMaxScore(Participant *p, int size)
 {
     int max = p[0].score;
@@ -297,6 +380,44 @@ int GetMaxScore(Participant *p, int size)
         if (p[i].score > max)
             max = p[i].score;
     }
+    return max;
+}
+
+int GetMaxTime(Participant *p, int size, char *eventName)
+{
+    int max = 0;
+
+    if (strcmp(eventName, SWIM) == 0)
+    {
+        max = p[0].swim;
+
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].swim > max)
+                max = p[i].swim;
+        }
+    }
+    else if (strcmp(eventName, CYCLE) == 0)
+    {
+        max = p[0].cycle;
+
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].cycle > max)
+                max = p[i].cycle;
+        }
+    }
+    else if (strcmp(eventName, RUN) == 0)
+    {
+        max = p[0].run;
+
+        for (int i = 0; i < size; i++)
+        {
+            if (p[i].run > max)
+                max = p[i].run;
+        }
+    }
+
     return max;
 }
 

@@ -22,6 +22,7 @@ void PrintBestTriathlete();
 int GetMaxTime(Participant *p, int size, char *eventName);
 void PrintWinner();
 Participant *GetWinner(Participant *p, int total, char *competitionName);
+Participant *GetEventWinner(Participant *p, int total, char *competitionName, char *eventName);
 int GetMaxScore(Participant *p, int size);
 Participant *FilterParticipants(Participant *p, int size, char *competition);
 void RegisterEventTimes();
