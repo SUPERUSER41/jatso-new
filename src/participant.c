@@ -147,17 +147,17 @@ void PrintBestTriathlete()
                 switch (choice1)
                 {
                 case 1:
-                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
                     break;
                 case 2:
-                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
                     break;
 
                 case 3:
-                    Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
-                    int max = GetMaxTime(filteredCompetition, total, SWIM);
+                    // Participant *filteredCompetition = FilterParticipants(participants, total, KIDS_OF_STEEL);
+                    // int max = GetMaxTime(filteredCompetition, total, SWIM);
                     break;
                 }
 
@@ -181,7 +181,7 @@ void PrintBestTriathlete()
 
 int GetMaxTime(Participant *p, int size, char *eventName)
 {
-    int max;
+    int max = 0;
 
     if (strcmp(eventName, SWIM) == 0)
     {
